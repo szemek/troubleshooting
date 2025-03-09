@@ -35,3 +35,54 @@ kubectl port-forward airbyte-db-0 5432:5432
 ```
 
 Now you can connect to your Airbyte database via `localhost:5432`, e.g. `psql -h localhost -p 5432 -U airbyte -d db-airbyte`
+
+## Hanging sync
+
+If you have hanging sync like this
+![Logs](assets/logs.png)
+
+```
+2025-03-09 17:09:31 platform INFO APPLY Stage: LAUNCH — (workloadId = 10c99cb3-d889-4f52-8e91-5e3e2f5da035_2_0_sync) — (dataplaneId = local)
+2025-03-09 17:09:31 platform INFO [initContainer] image: airbyte/workload-init-container:1.5.0 resources: ResourceRequirements(claims=[], limits={memory=4Gi, cpu=3}, requests={memory=2Gi, cpu=1}, additionalProperties={})
+2025-03-09 17:09:31 platform INFO Launching replication pod: replication-job-2-attempt-0 with containers:
+2025-03-09 17:09:31 platform INFO [source] image: airbyte/source-faker:6.2.20 resources: ResourceRequirements(claims=[], limits={memory=4Gi, cpu=3}, requests={memory=1Gi, cpu=0.2}, additionalProperties={})
+2025-03-09 17:09:31 platform INFO [destination] image: airbyte/destination-dev-null:0.7.18 resources: ResourceRequirements(claims=[], limits={memory=4Gi, cpu=3}, requests={memory=1Gi, cpu=0.2}, additionalProperties={})
+2025-03-09 17:09:31 platform INFO [orchestrator] image: airbyte/container-orchestrator:1.5.0 resources: ResourceRequirements(claims=[], limits={memory=4Gi, cpu=3}, requests={memory=2Gi, cpu=1}, additionalProperties={})
+```
+
+And `k9s` screenshot looks like this:
+
+![replication-job pod](assets/replication-job-pod.png)
+
+And `kubectl describe pod replication-job-...` looks like this:
+
+```
+Events:
+  Type     Reason            Age                    From               Message
+  ----     ------            ----                   ----               -------
+  Warning  FailedScheduling  14m                    default-scheduler  0/1 nodes are available: 1 Insufficient cpu. preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+  Warning  FailedScheduling  4m34s (x2 over 9m34s)  default-scheduler  0/1 nodes are available: 1 Insufficient cpu. preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+```
+
+That means that you don't have enough resources on your machine.
+
+Let's sum up requests to know how much resources is needed
+
+```
+[initContainer] ... requests={memory=2Gi, cpu=1}
+[source] ... requests={memory=1Gi, cpu=0.2}
+[destination] ... requests={memory=1Gi, cpu=0.2}
+[orchestrator] ... requests={memory=2Gi, cpu=1}
+
+requests={memory=6Gi, cpu=2.4}
+```
+
+As you can notice at least 6GB of RAM and 2.4 cores/vCPU are needed.
+
+:warning: Keep in mind that there are other Airbyte components are running, so you need even more resources. Also, different source and destination may need different amount of resources.
+
+**Solutions**
+
+1. Machine with more resources (the easiest, works best, long-term solution)
+2. For `abctl local install ...` add `--low-resource-mode` flag (`abctl` only :warning:)
+3. Adjust requests/limits for jobs and other Airbyte components in `values.yaml` (requires experiments and calculations to find the most effective values). Check Slack thread https://airbytehq.slack.com/archives/C021JANJ6TY/p1728564196843469?thread_ts=1728561176.853139&cid=C021JANJ6TY
