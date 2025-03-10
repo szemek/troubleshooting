@@ -11,6 +11,7 @@ Things worth including in your questions:
 * custom `values.yaml`
 * details about load balancers (Connection idle timeout, HTTP client keepalive duration for AWS load balancers), reverse proxy
 * logs, stacktraces
+* and more...
 
 ## Debugging Airbyte deployed by `abctl`
 
