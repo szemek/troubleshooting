@@ -1,3 +1,16 @@
+## What information might be useful when asking for help?
+
+There are many details related to Airbyte that might be useful when asking for help. Providing more context speeds up a process of a solving your problem.
+Things worth including in your questions:
+* Airbyte version
+* installation methods: `abctl`? helm chart on Kubernetes? old `run-ab-platform.sh` script or docker-compose?
+* for connections, versions of source and destination connectors
+* versions of connectors
+* available resources on machine (VM, EC2 instance, etc.): memory (RAM) / CPU (cores, vCPU)
+* executed commands with options
+* custom `values.yaml`
+* details about load balancers (Connection idle timeout, HTTP client keepalive duration for AWS load balancers), reverse proxy
+
 ## Debugging Airbyte deployed by `abctl`
 
 On machine where you have your Airbyte deployed, install [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) and [kubectx + kubens](https://github.com/ahmetb/kubectx) and [k9s](https://k9scli.io/)
