@@ -51,6 +51,18 @@ kubectl port-forward airbyte-db-0 5432:5432
 
 Now you can connect to your Airbyte database via `localhost:5432`, e.g. `psql -h localhost -p 5432 -U airbyte -d db-airbyte`
 
+## Connecting to Airbyte database (Airbyte deployed by `helm`)
+
+On machine where you have your Airbyte deployed, install [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) and [kubectx + kubens](https://github.com/ahmetb/kubectx) and [k9s](https://k9scli.io/)
+then execute commands:
+
+```bash
+kubens airbyte
+kubectl port-forward airbyte-db-0 5432:5432
+```
+
+Now you can connect to your Airbyte database via `localhost:5432`, e.g. `psql -h localhost -p 5432 -U airbyte -d db-airbyte`
+
 ## Hanging sync
 
 If you have hanging sync like this
