@@ -4,6 +4,7 @@ There are many details related to Airbyte that might be useful when asking for h
 Things worth including in your questions:
 * Airbyte version
 * installation methods: `abctl`? helm chart on Kubernetes? old `run-ab-platform.sh` script or docker-compose?
+* operating system
 * for connections, versions of source and destination connectors
 * versions of connectors
 * available resources on machine (VM, EC2 instance, etc.): memory (RAM) / CPU (cores, vCPU)
