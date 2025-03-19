@@ -7,6 +7,7 @@ Things worth including in your questions:
 * operating system
 * for connections, versions of source and destination connectors
 * versions of connectors
+* connector type: no-code, low-code, Python CDK?
 * available resources on machine (VM, EC2 instance, etc.): memory (RAM) / CPU (cores, vCPU)
 * executed commands with options
 * custom `values.yaml`
