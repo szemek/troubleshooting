@@ -1,7 +1,7 @@
 ## What information might be useful when asking for help?
 
 There are many details related to Airbyte that might be useful when asking for help. Providing more context speeds up a process of a solving your problem.
-Consider including things in a list below in your questions:
+Consider including things in your questions from a list below:
 * Airbyte version
 * installation methods: `abctl`? helm chart on Kubernetes? old `run-ab-platform.sh` script or docker-compose?
 * operating system
