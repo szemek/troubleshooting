@@ -126,7 +126,9 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/504
 
 > The HTTP 504 Gateway Timeout server error response status code indicates that the server, while acting as a gateway or proxy, did not get a response in time from the upstream server in order to complete the request. This is similar to a 502 Bad Gateway, except that in a 504 status, the proxy or gateway did not receive any HTTP response from the origin within a certain time.
 
-**Possible solutions**
+**Solution**
+
+Apply following changes:
 
 * If you use load balancer on AWS, e.g. ALB, increase `Connection idle timeout` to e.g. 1800 seconds
 * In values.yaml set following values:
