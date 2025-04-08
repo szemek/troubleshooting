@@ -119,3 +119,25 @@ As you can notice at least 6GB of RAM and 2.4 cores/vCPU are needed.
 **References**
 
 [Understand Airbyte > Workloads & Jobs](https://docs.airbyte.com/understanding-airbyte/jobs)
+
+## An unknown error occurred. (HTTP 504)
+
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/504
+
+> The HTTP 504 Gateway Timeout server error response status code indicates that the server, while acting as a gateway or proxy, did not get a response in time from the upstream server in order to complete the request. This is similar to a 502 Bad Gateway, except that in a 504 status, the proxy or gateway did not receive any HTTP response from the origin within a certain time.
+
+**Possible solutions**
+
+* If you use load balancer on AWS, e.g. ALB, increase `Connection idle timeout` to e.g. 1800 seconds
+* In values.yaml set following values:
+    ```
+    global:
+      env_vars:
+        HTTP_IDLE_TIMEOUT: "30m"
+        READ_TIMEOUT: "30m"
+    webapp:
+      ingress:
+        annotations:
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
+    ```
