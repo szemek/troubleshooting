@@ -137,6 +137,9 @@ Apply following changes:
       env_vars:
         HTTP_IDLE_TIMEOUT: "30m"
         READ_TIMEOUT: "30m"
+    ```
+* If you deploy by `helm` on Kubernetes cluster, in values.yaml add following values as well:
+    ```
     webapp:
       ingress:
         annotations:
