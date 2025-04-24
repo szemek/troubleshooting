@@ -38,6 +38,33 @@ kubens airbyte # change namespace where your Airbyte is deployed
 k9s
 ```
 
+## Getting logs from Airbyte deployed by `abctl`
+
+### k9s
+
+On machine where you have your Airbyte deployed, install [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) and [kubectx + kubens](https://github.com/ahmetb/kubectx) and [k9s](https://k9scli.io/)
+then execute commands:
+
+```bash
+mkdir -p ~/.kube
+KUBECONFIG=~/.airbyte/abctl/abctl.kubeconfig kubectl config view --flatten > ~/.kube/config
+kubectx kind-airbyte-abctl
+kubens airbyte-abctl
+k9s
+```
+Use arrows up `↑` and down `↓`, and press `l` to see the logs for specific pod.
+
+### kind
+
+On machine where you have your Airbyte deployed, install [kind](https://kind.sigs.k8s.io/docs/user/quick-start#installation)
+then execute command:
+
+```bash
+kind export logs --name=airbyte-abctl kind-logs
+```
+
+Your logs will be exported to `kind-logs` folder.
+
 ## Connecting to Airbyte database (Airbyte deployed by `abctl`)
 
 On machine where you have your Airbyte deployed, install [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) and [kubectx + kubens](https://github.com/ahmetb/kubectx) and [k9s](https://k9scli.io/)
