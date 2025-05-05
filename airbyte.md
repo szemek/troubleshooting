@@ -137,11 +137,14 @@ As you can notice at least 6GB of RAM and 2.4 cores/vCPU are needed.
 
 :warning: Keep in mind that there are other Airbyte components are running, so you need even more resources. Also, different source and destination may need different amount of resources.
 
-**Solutions**
+**Solution**
 
-1. Machine with more resources (the easiest, works best, long-term solution)
-2. For `abctl local install ...` add `--low-resource-mode` flag (`abctl` only :warning:)
-3. Adjust requests/limits for jobs and other Airbyte components in `values.yaml` (requires experiments and calculations to find the most effective values). Check Slack thread https://airbytehq.slack.com/archives/C021JANJ6TY/p1728564196843469?thread_ts=1728561176.853139&cid=C021JANJ6TY
+Use machine(s) with more resources, 8 vCPUs (cores) and at least 8GB of RAM.
+
+**Other solutions**
+
+1. For `abctl local install ...` add `--low-resource-mode` flag (`abctl` only :warning:)
+2. Adjust requests/limits for jobs and other Airbyte components in `values.yaml` (requires experiments and calculations to find the most effective values). Check Slack thread https://airbytehq.slack.com/archives/C021JANJ6TY/p1728564196843469?thread_ts=1728561176.853139&cid=C021JANJ6TY
 
 **References**
 
