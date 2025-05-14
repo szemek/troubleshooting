@@ -65,6 +65,30 @@ kind export logs --name=airbyte-abctl kind-logs
 
 Your logs will be exported to `kind-logs` folder.
 
+## Getting logs from deployed by `helm` on Kubernetes cluster
+
+### k9s
+
+On your local machine or any machine that has access to Kubernetes cluster with Airbyte, install [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) and [kubectx + kubens](https://github.com/ahmetb/kubectx) and [k9s](https://k9scli.io/)
+then execute commands:
+
+```bash
+kubens airbyte # change namespace where your Airbyte is deployed
+k9s
+```
+
+### stern
+
+On your local machine or any machine that has access to Kubernetes cluster with Airbyte, install [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) and [kubectx + kubens](https://github.com/ahmetb/kubectx) and [stern](https://github.com/stern/stern)
+then execute commands:
+
+```bash
+kubens airbyte # change namespace where your Airbyte is deployed
+stern .
+# or
+stern --tail 0 .
+```
+
 ## Connecting to Airbyte database (Airbyte deployed by `abctl`)
 
 On machine where you have your Airbyte deployed, install [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) and [kubectx + kubens](https://github.com/ahmetb/kubectx) and [k9s](https://k9scli.io/)
